@@ -29,15 +29,14 @@ modelRouter.route("/")
     })
 
     .put((req, res,next) => {
-        res.statusCode = 404;
+        res.statusCode = 405;
         res.end("Please specify ID to update it");
     })
 
     .delete ((req, res, next) => {
-        res.statusCode = 404;
+        res.statusCode = 405;
         res.end("Please specify ID to delete it");
     })
-
 
 modelRouter.route("/:id")
     .get((req,res,next) => {
@@ -69,7 +68,7 @@ modelRouter.route("/:id")
             .then((vehicle) => {
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "application/json");
-                res.end(req.params.id + " has been deleted!");
+                res.json(vehicle);
             }, (err) => next(err))
             .catch((err) => next(err));
     })

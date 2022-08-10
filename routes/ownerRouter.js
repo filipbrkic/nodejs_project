@@ -28,4 +28,50 @@ ownerRouter.route("/")
             .catch((err) => next(err));
     })
 
+    .put((req, res,next) => {
+        res.statusCode = 404;
+        res.end("Please specify ID to update it");
+    })
+
+    .delete ((req, res, next) => {
+        res.statusCode = 404;
+        res.end("Please specify ID to delete it");
+    })
+
+
+ownerRouter.route("/:id")
+    .get((req,res,next) => {
+        Owners.findById(req.params.id)
+            .then((owner) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(owner);
+            })
+    })
+
+    .post((req,res,next) => {
+        res.statusCode = 405;
+        res.end("POST operation is not supported on " + req.params.id)
+    })
+
+    .put((req,res,next) => {
+        Owners.findByIdAndUpdate(req.params.id, { $set: req.body }, {new: true})
+            .then((owner) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(owner);
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
+
+    .delete((req,res,next) => {
+        Owners.findByIdAndDelete(req.params.id)
+            .then((owner) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.end(req.params.id + " has been deleted!");
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
+
 module.exports = ownerRouter;

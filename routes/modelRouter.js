@@ -28,4 +28,50 @@ modelRouter.route("/")
             .catch((err) => next(err));
     })
 
+    .put((req, res,next) => {
+        res.statusCode = 404;
+        res.end("Please specify ID to update it");
+    })
+
+    .delete ((req, res, next) => {
+        res.statusCode = 404;
+        res.end("Please specify ID to delete it");
+    })
+
+
+modelRouter.route("/:id")
+    .get((req,res,next) => {
+        VehicleModels.findById(req.params.id)
+            .then((vehicle) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(vehicle);
+            })
+    })
+
+    .post((req,res,next) => {
+        res.statusCode = 405;
+        res.end("POST operation is not supported on " + req.params.id)
+    })
+
+    .put((req,res,next) => {
+        VehicleModels.findByIdAndUpdate(req.params.id, { $set: req.body }, {new: true})
+            .then((vehicle) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(vehicle);
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
+
+    .delete((req,res,next) => {
+        VehicleModels.findByIdAndDelete(req.params.id)
+            .then((vehicle) => {
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.end(req.params.id + " has been deleted!");
+            }, (err) => next(err))
+            .catch((err) => next(err));
+    })
+
 module.exports = modelRouter;

@@ -17,8 +17,8 @@ describe("testing owners", () => {
         return request(app)
         .post("/owners")
         .send({
-            firstName: "jest",
-            lastName: "from test",
+            firstName: "owner firstName test",
+            lastName: "owner lastName test",
         })
         .expect(500);
     }); */
@@ -42,8 +42,8 @@ describe("testing owners", () => {
         return request(app)
         .post(`/owners/${id}`)
         .send({
-            firstName: "jest",
-            lastName: "from test",
+            firstName: "owner firstName test",
+            lastName: "owner lastName test",
         })
         .expect(405);
     });
@@ -60,17 +60,17 @@ describe("testing owners", () => {
 });
 
 describe("testing owners - errors", () => {
-    test("GET operation", () => {
+    test("GET operation with error", () => {
         return request(app)
         .get("/owner")
         .expect(404);
     });
-    test("POST operation", () => {
+    test("POST operation with error", () => {
         return request(app)
         .post("/owners")
         .send({
-            firsName: "jest",
-            lastName: "from test",
+            firsName: "owner firstName test",
+            lastName: "owner lastName test",
         })
         .expect(500);
     });

@@ -14,8 +14,8 @@ describe("testing owners", () => {
         return request(app)
         .post("/owners")
         .send({
-            firstName: "jest",
-            lastName: "from test",
+            firstName: "owner firstName test",
+            lastName: "owner lastName test",
         })
         .expect(201);
     });
@@ -66,8 +66,8 @@ describe("testing owners - errors", () => {
         return request(app)
         .post("/owners")
         .send({
-            firsName: "jest",
-            lastName: "from test",
+            fName: "owner firstName test",
+            lastName: "owner lastName test",
         })
         .expect(500);
     });

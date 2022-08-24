@@ -1,10 +1,19 @@
 const request = require("supertest");
 const app = require("../app");
 const bson = require('bson');
+const mongoose = require("mongoose");
+var config = require("../config");
+const url = config.mongoUrl;
 
+beforeEach(() => {
+    mongoose.connect(url);
+});
+afterEach((done) => {
+    mongoose.disconnect(done);
+});
 const id = new bson.ObjectId();
 
-describe("testing owners", () => {
+it("testing owners", () => {
     test("GET operation", () => {
         return request(app)
         .get("/owners")

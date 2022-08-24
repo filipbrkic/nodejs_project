@@ -1,10 +1,11 @@
 const request = require("supertest");
 const app = require("../app");
 const bson = require('bson');
-
 const mongoose = require("mongoose");
 
-mongoose.disconnect();
+beforeEach(() => {
+    mongoose.disconnect();
+});
 
 const id = new bson.ObjectId();
 

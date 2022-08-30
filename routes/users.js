@@ -6,11 +6,6 @@ var passport = require("passport");
 var router = express.Router();
 router.use(bodyParser.json());
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.post("/signup", (req,res,next) => {
   User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
     if(err) {
@@ -35,6 +30,7 @@ router.post("/login", passport.authenticate("local"), (req,res,next) => {
 
 router.get('/logout', (req, res, next) => {
   if (req.session) {
+    res.statusCode = 200;
     req.session.destroy();
     res.clearCookie('session-id');
     res.redirect('/');
